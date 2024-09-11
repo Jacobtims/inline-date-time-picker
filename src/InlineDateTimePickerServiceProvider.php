@@ -2,9 +2,8 @@
 
 namespace Jacobtims\InlineDateTimePicker;
 
+use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Jacobtims\InlineDateTimePicker\Testing\TestsInlineDateTimePicker;
 use Livewire\Features\SupportTesting\Testable;
@@ -34,11 +33,6 @@ class InlineDateTimePickerServiceProvider extends PackageServiceProvider
             $this->getAssetPackageName()
         );
 
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
-
         // Testing
         Testable::mixin(new TestsInlineDateTimePicker);
     }
@@ -54,17 +48,7 @@ class InlineDateTimePickerServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('inline-date-time-picker', __DIR__ . '/../resources/dist/components/inline-date-time-picker.js'),
-            Css::make('inline-date-time-picker-styles', __DIR__ . '/../resources/dist/inline-date-time-picker.css'),
-            Js::make('inline-date-time-picker-scripts', __DIR__ . '/../resources/dist/inline-date-time-picker.js'),
+            AlpineComponent::make('inline-date-time-picker', __DIR__ . '/../resources/dist/components/inline-date-time-picker.js'),
         ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getScriptData(): array
-    {
-        return [];
     }
 }

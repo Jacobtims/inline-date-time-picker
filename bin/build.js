@@ -45,6 +45,6 @@ const defaultOptions = {
 
 compile({
     ...defaultOptions,
-    entryPoints: ['./resources/js/index.js'],
+    entryPoints: ['./resources/js/inline-date-time-picker.js'],
     outfile: './resources/dist/inline-date-time-picker.js',
 })
