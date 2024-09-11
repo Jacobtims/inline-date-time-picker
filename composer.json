@@ -1,0 +1,71 @@
+{
+    "name": "jacobtims/inline-date-time-picker",
+    "description": "A plugin for adding inline date time pickers to your Filament forms.",
+    "keywords": [
+        "Jacobtims",
+        "laravel",
+        "inline-date-time-picker"
+    ],
+    "homepage": "https://github.com/jacobtims/inline-date-time-picker",
+    "support": {
+        "issues": "https://github.com/jacobtims/inline-date-time-picker/issues",
+        "source": "https://github.com/jacobtims/inline-date-time-picker"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jacobtims",
+            "email": "jacobtimmer04@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0",
+        "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.9",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.1",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jacobtims\\InlineDateTimePicker\\": "src/",
+            "Jacobtims\\InlineDateTimePicker\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jacobtims\\InlineDateTimePicker\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jacobtims\\InlineDateTimePicker\\InlineDateTimePickerServiceProvider"
+            ],
+            "aliases": {
+                "InlineDateTimePicker": "Jacobtims\\InlineDateTimePicker\\Facades\\InlineDateTimePicker"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
