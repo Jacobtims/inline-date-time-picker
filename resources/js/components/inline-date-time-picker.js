@@ -13,7 +13,7 @@ dayjs.extend(utc)
 
 window.dayjs = dayjs
 
-export default function inlineDatePickerFormComponent({
+export default function inlineDateTimePickerFormComponent({
     firstDayOfWeek,
     locale,
     state,

@@ -16,6 +16,8 @@ class InlineDateTimePickerServiceProvider extends PackageServiceProvider
 
     public static string $viewNamespace = 'inline-date-time-picker';
 
+    public static string $assetPackageName = 'inline-date-time-picker';
+
     public function configurePackage(Package $package): void
     {
         $package
@@ -29,17 +31,12 @@ class InlineDateTimePickerServiceProvider extends PackageServiceProvider
     {
         // Asset Registration
         FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
+            assets: $this->getAssets(),
+            package: static::$assetPackageName,
         );
 
         // Testing
         Testable::mixin(new TestsInlineDateTimePicker);
-    }
-
-    protected function getAssetPackageName(): ?string
-    {
-        return 'jacobtims/inline-date-time-picker';
     }
 
     /**

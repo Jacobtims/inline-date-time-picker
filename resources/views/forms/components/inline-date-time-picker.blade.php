@@ -1,5 +1,6 @@
 @php
     use Filament\Support\Facades\FilamentView;
+    use Jacobtims\InlineDateTimePicker\InlineDateTimePickerServiceProvider;
 
     $extraAlpineAttributes = $getExtraAlpineAttributes();
     $hasTime = $hasTime();
@@ -22,8 +23,8 @@
         @else
             ax-load
         @endif
-        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('inline-date-picker') }}"
-        x-data="inlineDatePickerFormComponent({
+        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('inline-date-time-picker', InlineDateTimePickerServiceProvider::$assetPackageName) }}"
+        x-data="inlineDateTimePickerFormComponent({
             firstDayOfWeek: {{ $getFirstDayOfWeek() }},
             locale: @js($getLocale()),
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
