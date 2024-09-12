@@ -1,13 +1,14 @@
-# A plugin for adding inline date time pickers to your Filament forms.
+# Filament Inline Date-time Picker
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobtims/inline-date-time-picker.svg?style=flat-square)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jacobtims/inline-date-time-picker/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jacobtims/inline-date-time-picker/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jacobtims/inline-date-time-picker/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/jacobtims/inline-date-time-picker/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobtims/inline-date-time-picker.svg?style=flat-square)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 
+![Screenshot](https://github.com/jacobtims/inline-date-time-picker/blob/main/media/1.png?raw=true)
 
+A Filament plugin for adding inline Date-time Pickers to your Filament forms.
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
 ## Installation
 
@@ -17,37 +18,26 @@ You can install the package via composer:
 composer require jacobtims/inline-date-time-picker
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="inline-date-time-picker-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="inline-date-time-picker-config"
-```
-
 Optionally, you can publish the views using
 
 ```bash
 php artisan vendor:publish --tag="inline-date-time-picker-views"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
+You can use all of the methods available for the Filament [Date-time picker](https://filamentphp.com/docs/3.x/forms/fields/date-time-picker) field, except for the prefix and suffix methods.
+
 ```php
-$inlineDateTimePicker = new Jacobtims\InlineDateTimePicker();
-echo $inlineDateTimePicker->echoPhrase('Hello, Jacobtims!');
+use Jacobtims\InlineDateTimePicker\Forms\Components\InlineDateTimePicker;
+
+InlineDateTimePicker::make('date')
+    ->label('My Inline Date Time Picker')
+    ->default(today())
+    ->minDate(today())
+    ->date(true)
+    ->time(false)
+    ->required();
 ```
 
 ## Testing
