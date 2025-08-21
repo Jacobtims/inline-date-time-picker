@@ -9,6 +9,7 @@ use DateTime;
 use Filament\Forms\Components\Concerns;
 use Filament\Forms\Components\Field;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
+use Filament\Support\Facades\FilamentTimezone;
 use Illuminate\Support\Carbon;
 use Illuminate\View\ComponentAttributeBag;
 
@@ -25,7 +26,7 @@ class InlineDateTimePicker extends Field
     protected string $view = 'inline-date-time-picker::forms.components.inline-date-time-picker';
 
     /**
-     * @var \Closure
+     * @var array<array<mixed> | Closure>
      */
     protected array $extraTriggerAttributes = [];
 
@@ -286,7 +287,7 @@ class InlineDateTimePicker extends Field
         $temporaryAttributeBag = new ComponentAttributeBag;
 
         foreach ($this->extraTriggerAttributes as $extraTriggerAttributes) {
-            $temporaryAttributeBag = $temporaryAttributeBag->merge($this->evaluate($extraTriggerAttributes));
+            $temporaryAttributeBag = $temporaryAttributeBag->merge($this->evaluate($extraTriggerAttributes), escape: false);
         }
 
         return $temporaryAttributeBag->getAttributes();
@@ -345,7 +346,7 @@ class InlineDateTimePicker extends Field
 
     public function getTimezone(): string
     {
-        return $this->evaluate($this->timezone) ?? config('app.timezone');
+        return $this->evaluate($this->timezone) ?? ($this->hasTime() ? FilamentTimezone::get() : config('app.timezone'));
     }
 
     public function getLocale(): string
