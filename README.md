@@ -1,6 +1,6 @@
 # Filament Inline Date-time Picker
 
-[![Filament 3.x](https://img.shields.io/badge/filament-3.x-EBB304?style=flat-square)](https://filamentphp.com/docs/3.x/panels/installation)
+[![Filament 4.x](https://img.shields.io/badge/filament-4.x-EBB304?style=flat-square)](https://filamentphp.com/docs/4.x/introduction/installation)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobtims/inline-date-time-picker.svg?style=flat-square)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobtims/inline-date-time-picker.svg?style=flat-square&color=#44CC11)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 
@@ -25,7 +25,7 @@ php artisan vendor:publish --tag="inline-date-time-picker-views"
 
 ## Usage
 
-You can use all of the methods available for the Filament [Date-time picker](https://filamentphp.com/docs/3.x/forms/fields/date-time-picker) field, except for the prefix and suffix methods.
+You can use all of the methods available for the Filament [Date-time picker](https://filamentphp.com/docs/4.x/forms/date-time-picker) field, except for the prefix and suffix methods.
 
 ```php
 use Jacobtims\InlineDateTimePicker\Forms\Components\InlineDateTimePicker;
