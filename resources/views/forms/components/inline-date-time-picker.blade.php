@@ -1,66 +1,75 @@
 @php
+    use Filament\Support\Enums\VerticalAlignment;
+    use Filament\Support\Facades\FilamentAsset;
     use Filament\Support\Facades\FilamentView;
     use Jacobtims\InlineDateTimePicker\InlineDateTimePickerServiceProvider;
 
+    use function Filament\Support\prepare_inherited_attributes;
+
+    $fieldWrapperView = $getFieldWrapperView();
     $extraAlpineAttributes = $getExtraAlpineAttributes();
+    $extraAttributeBag = $getExtraAttributeBag();
     $hasTime = $hasTime();
     $id = $getId();
     $isDisabled = $isDisabled();
     $maxDate = $getMaxDate();
     $minDate = $getMinDate();
     $statePath = $getStatePath();
+    $livewireKey = $getLivewireKey();
 @endphp
 
 <x-dynamic-component
-    :component="$getFieldWrapperView()"
+    :component="$fieldWrapperView"
     :field="$field"
-    :inline-label-vertical-alignment="\Filament\Support\Enums\VerticalAlignment::Center"
+    :inline-label-vertical-alignment="VerticalAlignment::Center"
 >
-    <div
-        x-ignore
-        @if (FilamentView::hasSpaMode())
-            {{-- format-ignore-start --}}ax-load="visible || event (ax-modal-opened)"{{-- format-ignore-end --}}
-        @else
-            ax-load
-        @endif
-        ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('inline-date-time-picker', InlineDateTimePickerServiceProvider::$assetPackageName) }}"
-        x-data="inlineDateTimePickerFormComponent({
-            firstDayOfWeek: {{ $getFirstDayOfWeek() }},
-            locale: @js($getLocale()),
-            state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
-        })"
-        {{
-            $attributes
-                ->merge($getExtraAttributes(), escape: false)
-                ->merge($getExtraAlpineAttributes(), escape: false)
-                ->class(['fi-fo-date-time-picker max-w-sm'])
-        }}
+    <x-filament::input.wrapper
+        :disabled="$isDisabled"
+        :valid="! $errors->has($statePath)"
+        :attributes="prepare_inherited_attributes($extraAttributeBag)->class(['fi-fo-inline-date-time-picker'])"
     >
-        <input x-ref="maxDate" type="hidden" value="{{ $maxDate }}" />
-
-        <input x-ref="minDate" type="hidden" value="{{ $minDate }}" />
-
-        <input
-            x-ref="disabledDates"
-            type="hidden"
-            value="{{ json_encode($getDisabledDates()) }}"
-        />
-
         <div
-            x-ref="panel"
-            x-cloak
+            x-load
+            x-load-src="{{ FilamentAsset::getAlpineComponentSrc('inline-date-time-picker', InlineDateTimePickerServiceProvider::$assetPackageName) }}"
+            x-data="inlineDateTimePickerFormComponent({
+                firstDayOfWeek: {{ $getFirstDayOfWeek() }},
+                locale: @js($getLocale()),
+                state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
+            })"
             wire:ignore
-            wire:key="{{ $this->getId() }}.{{ $statePath }}.{{ $field::class }}.panel"
-            @class([
-                'fi-fo-date-time-picker-panel rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-950/10 dark:bg-gray-900 dark:ring-white/10',
-            ])
+            wire:key="{{ $livewireKey }}.{{
+                substr(md5(serialize([
+                    $isDisabled,
+                    $maxDate,
+                    $minDate,
+                ])), 0, 64)
+            }}"
+            {{ $getExtraAlpineAttributeBag() }}
         >
-            <div class="grid gap-y-3">
+            <input x-ref="maxDate" type="hidden" value="{{ $maxDate }}" />
+
+            <input x-ref="minDate" type="hidden" value="{{ $minDate }}" />
+
+            <input
+                x-ref="disabledDates"
+                type="hidden"
+                value="{{ json_encode($getDisabledDates()) }}"
+            />
+
+            <div
+                x-ref="panel"
+                x-cloak
+                wire:ignore
+                wire:key="{{ $livewireKey }}.panel"
+                @class([
+                    'fi-fo-inline-date-time-picker-panel',
+                ])
+            >
                 @if ($hasDate())
-                    <div class="flex items-center justify-between">
+                    <div class="fi-fo-inline-date-time-picker-panel-header">
                         <select
                             x-model="focusedMonth"
-                            class="grow cursor-pointer border-none bg-transparent p-0 text-sm font-medium text-gray-950 focus:ring-0 dark:bg-gray-900 dark:text-white"
+                            class="fi-fo-inline-date-time-picker-month-select"
                         >
                             <template
                                 x-for="(month, index) in months"
@@ -76,25 +85,25 @@
                             type="number"
                             inputmode="numeric"
                             x-model.debounce="focusedYear"
-                            class="w-16 border-none bg-transparent p-0 text-right text-sm text-gray-950 focus:ring-0 dark:text-white"
+                            class="fi-fo-inline-date-time-picker-year-input"
                         />
                     </div>
 
-                    <div class="grid grid-cols-7 gap-1">
+                    <div class="fi-fo-inline-date-time-picker-calendar-header">
                         <template
                             x-for="(day, index) in dayLabels"
                             x-bind:key="index"
                         >
                             <div
                                 x-text="day"
-                                class="text-center text-xs font-medium text-gray-500 dark:text-gray-400"
+                                class="fi-fo-inline-date-time-picker-calendar-header-day"
                             ></div>
                         </template>
                     </div>
 
                     <div
                         role="grid"
-                        class="grid grid-cols-[repeat(7,minmax(theme(spacing.7),1fr))] gap-1"
+                        class="fi-fo-inline-date-time-picker-calendar"
                     >
                         <template
                             x-for="day in emptyDaysInFocusedMonth"
@@ -114,32 +123,19 @@
                                 role="option"
                                 x-bind:aria-selected="focusedDate.date() === day"
                                 x-bind:class="{
-                                    'text-gray-950 dark:text-white': ! dayIsToday(day) && ! dayIsSelected(day),
-                                    'cursor-pointer': ! dayIsDisabled(day),
-                                    'text-primary-600 dark:text-primary-400':
-                                        dayIsToday(day) &&
-                                        ! dayIsSelected(day) &&
-                                        focusedDate.date() !== day &&
-                                        ! dayIsDisabled(day),
-                                    'bg-gray-50 dark:bg-white/5':
-                                        focusedDate.date() === day &&
-                                        ! dayIsSelected(day) &&
-                                        ! dayIsDisabled(day),
-                                    'text-primary-600 bg-gray-50 dark:bg-white/5 dark:text-primary-400':
-                                        dayIsSelected(day),
-                                    'pointer-events-none': dayIsDisabled(day),
-                                    'opacity-50': dayIsDisabled(day),
+                                    'fi-fo-inline-date-time-picker-calendar-day-today': dayIsToday(day),
+                                    'fi-focused': focusedDate.date() === day,
+                                    'fi-selected': dayIsSelected(day),
+                                    'fi-disabled': dayIsDisabled(day),
                                 }"
-                                class="rounded-full text-center text-sm leading-loose transition duration-75"
+                                class="fi-fo-inline-date-time-picker-calendar-day"
                             ></div>
                         </template>
                     </div>
                 @endif
 
                 @if ($hasTime)
-                    <div
-                        class="flex items-center justify-center rtl:flex-row-reverse"
-                    >
+                    <div class="fi-fo-inline-date-time-picker-time-inputs">
                         <input
                             max="23"
                             min="0"
@@ -147,11 +143,10 @@
                             type="number"
                             inputmode="numeric"
                             x-model.debounce="hour"
-                            class="me-1 w-10 border-none bg-transparent p-0 text-center text-sm text-gray-950 focus:ring-0 dark:text-white"
                         />
 
                         <span
-                            class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                            class="fi-fo-inline-date-time-picker-time-input-separator"
                         >
                             :
                         </span>
@@ -163,12 +158,11 @@
                             type="number"
                             inputmode="numeric"
                             x-model.debounce="minute"
-                            class="me-1 w-10 border-none bg-transparent p-0 text-center text-sm text-gray-950 focus:ring-0 dark:text-white"
                         />
 
                         @if ($hasSeconds())
                             <span
-                                class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                                class="fi-fo-inline-date-time-picker-time-input-separator"
                             >
                                 :
                             </span>
@@ -180,12 +174,11 @@
                                 type="number"
                                 inputmode="numeric"
                                 x-model.debounce="second"
-                                class="me-1 w-10 border-none bg-transparent p-0 text-center text-sm text-gray-950 focus:ring-0 dark:text-white"
                             />
                         @endif
                     </div>
                 @endif
             </div>
         </div>
-    </div>
+    </x-filament::input.wrapper>
 </x-dynamic-component>

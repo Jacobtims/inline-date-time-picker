@@ -1,0 +1,77 @@
+@import '../../../vendor/filament/filament/resources/css/theme.css';
+
+@source "../views";
+
+.fi-fo-inline-date-time-picker {
+    & .fi-fo-inline-date-time-picker-panel {
+        @apply space-y-3 rounded-lg bg-white p-4 shadow-lg ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10;
+
+        & .fi-fo-inline-date-time-picker-panel-header {
+            @apply flex items-center justify-between;
+        }
+    }
+
+    & .fi-fo-inline-date-time-picker-month-select {
+        @apply grow cursor-pointer border-none bg-transparent p-0 text-sm font-medium text-gray-950 focus:ring-0 dark:bg-gray-900 dark:text-white;
+    }
+
+    & .fi-fo-inline-date-time-picker-year-input {
+        @apply w-16 border-none bg-transparent p-0 text-right text-sm text-gray-950 focus:ring-0 dark:text-white;
+    }
+
+    & .fi-fo-inline-date-time-picker-calendar-header {
+        @apply grid grid-cols-7 gap-1;
+
+        & .fi-fo-inline-date-time-picker-calendar-header-day {
+            @apply text-center text-xs font-medium text-gray-500 dark:text-gray-400;
+        }
+    }
+
+    & .fi-fo-inline-date-time-picker-calendar {
+        @apply grid grid-cols-[repeat(7,minmax(--spacing(7),1fr))] gap-1;
+
+        & .fi-fo-inline-date-time-picker-calendar-day {
+            @apply rounded-full text-center text-sm leading-loose transition duration-75;
+
+            &.fi-disabled {
+                @apply pointer-events-none opacity-50;
+            }
+
+            &:not(.fi-disabled) {
+                @apply cursor-pointer;
+            }
+
+            &.fi-selected {
+                @apply text-primary-600 dark:text-primary-400 bg-gray-50 dark:bg-white/5;
+            }
+
+            &.fi-focused:not(.fi-selected):not(.fi-disabled) {
+                @apply bg-gray-100 dark:bg-white/10;
+            }
+
+            &.fi-fo-inline-date-time-picker-calendar-day-today:not(.fi-focused):not(
+                    .fi-selected
+                ):not(.fi-disabled) {
+                @apply text-primary-600 dark:text-primary-400;
+            }
+
+            &:not(.fi-fo-inline-date-time-picker-calendar-day-today):not(
+                    .fi-selected
+                ) {
+                @apply text-gray-950 dark:text-white;
+            }
+        }
+    }
+
+    & .fi-fo-inline-date-time-picker-time-inputs {
+        @apply flex items-center justify-center rtl:flex-row-reverse;
+
+        & input {
+            @apply me-1 w-10 border-none bg-transparent p-0 text-center text-sm text-gray-950 focus:ring-0 dark:text-white;
+        }
+
+        & .fi-fo-inline-date-time-picker-time-input-separator {
+            @apply text-sm font-medium text-gray-500 dark:text-gray-400;
+        }
+    }
+}

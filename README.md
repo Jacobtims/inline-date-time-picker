@@ -6,7 +6,7 @@
 
 ![Screenshot](https://github.com/jacobtims/inline-date-time-picker/blob/main/media/1.png?raw=true)
 
-A Filament plugin for adding inline Date-time Pickers to your Filament forms.
+A Filament plugin for adding inline date-time pickers to your forms.
 
 
 ## Installation

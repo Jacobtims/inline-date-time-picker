@@ -4,6 +4,7 @@ namespace Jacobtims\InlineDateTimePicker;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
+use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
 use Jacobtims\InlineDateTimePicker\Testing\TestsInlineDateTimePicker;
 use Livewire\Features\SupportTesting\Testable;
@@ -46,6 +47,7 @@ class InlineDateTimePickerServiceProvider extends PackageServiceProvider
     {
         return [
             AlpineComponent::make('inline-date-time-picker', __DIR__ . '/../resources/dist/components/inline-date-time-picker.js'),
+            Css::make('inline-date-time-picker', __DIR__ . '/../resources/dist/components/inline-date-time-picker.css'),
         ];
     }
 }
