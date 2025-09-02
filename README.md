@@ -4,7 +4,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobtims/inline-date-time-picker.svg?style=flat-square)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobtims/inline-date-time-picker.svg?style=flat-square&color=#44CC11)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 
-![Screenshot](https://github.com/jacobtims/inline-date-time-picker/blob/main/media/1.png?raw=true)
+![Screenshot](./art/preview.png)
 
 A Filament plugin for adding inline date-time pickers to your forms.
 
