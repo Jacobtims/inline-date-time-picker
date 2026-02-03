@@ -1,6 +1,6 @@
 # Filament Inline Date-time Picker
 
-[![Filament 4.x](https://img.shields.io/badge/filament-4.x-EBB304?style=flat-square)](https://filamentphp.com/docs/4.x/introduction/installation)
+[![Filament 5.x](https://img.shields.io/badge/filament-5.x-EBB304?style=flat-square)](https://filamentphp.com/docs/5.x/introduction/installation)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobtims/inline-date-time-picker.svg?style=flat-square)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobtims/inline-date-time-picker.svg?style=flat-square&color=#44CC11)](https://packagist.org/packages/jacobtims/inline-date-time-picker)
 
